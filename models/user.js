@@ -15,3 +15,5 @@ UserSchema.methods.encryptPassword = async password => {
   const hash = await bcrypt.hash(password, salt);
   return hash;
 };
+
+module.exports = mongoose.model("user", UserSchema);
