@@ -55,7 +55,9 @@ exports.update = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   try {
-    let post = await Post.findById(req.params.id);
+    let post = await Post.findByIdAndDelete(req.params.id);
+
+    res.send({message: "success"});
   } catch (err) {
     next(err)
   }
