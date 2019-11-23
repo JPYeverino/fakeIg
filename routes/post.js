@@ -6,10 +6,14 @@ const uploadImage = require("../middlewares/multer");
 const router = express.Router();
 
 router.get('/', postController.index);
+router.get('/:id', postController.show);
 router.post(
   '/',
+  hasDescription,
   uploadImage("posts").single("image"), 
-  hasDescription, 
-  postController.store);
+  postController.store
+);
+router.patch('/:id', hasDescription, postController.update);
+
 
 module.exports = router;
