@@ -3,9 +3,12 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const errorHandler = require('./middlewares/errorHandler');
 const mongoose = require('mongoose');
+
+const passportJWT = require('./middlewares/passport.JWT')();
+const errorHandler = require('./middlewares/errorHandler');
 const postRoutes = require('./routes/post');
+const authRoutes = require('./routes/auth');
 
 
 const app = express();
@@ -19,7 +22,9 @@ mongoose.connect("mongodb://localhost/rest-api-node", {
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passportJWT.initialize());
 
+app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 // app.get('/api/post', (req, res) => {
 //   res.send({"message":"home"});

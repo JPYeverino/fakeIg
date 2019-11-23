@@ -7,7 +7,7 @@ const config = require("../config");
 const ExtractJWT = passportJWT.ExtractJwt;
 const Strategy = passportJWT.Strategy;
 const params = {
-  secretOrke: config.jwtSecret, // TODO: Create a config folder and export an object with jwtSecret
+  secretOrKey: config.jwtSecret, // TODO: Create a config folder and export an object with jwtSecret
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
 };
 
