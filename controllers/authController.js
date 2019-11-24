@@ -51,7 +51,7 @@ exports.signup = async (req, res, next) => {
     user = await user.save();
     
     const token = jwt.encode({ id: user._id }, config.jwtSecret);
-    return res.send({ user });
+    return res.send({ user, token });
 
   } catch (error) {
     next(error);

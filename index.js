@@ -26,6 +26,7 @@ app.use(passportJWT.initialize());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/post', passportJWT.authenticate(), postRoutes);
+app.use('/api/follow', passportJWT.authenticate(), followRoutes);
 // app.get('/api/post', (req, res) => {
 //   res.send({"message":"home"});
 // });
