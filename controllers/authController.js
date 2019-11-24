@@ -32,6 +32,37 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.signup = (req, res, next) => {
-  
+exports.signup = async (req, res, next) => {
+  try {
+    validationHandler(req);
+
+    const existingUser = await User.findOne({ email: req.body.email });
+
+    if (existingUser) {
+      const error = new Error("Email already used");
+      error.statusCode = 403;
+      throw error;
+    }
+    
+    let user = new User();
+    user.email = req.body.email;
+    user.password = await user.encryptPassword(req.body.password);
+    user.name = req.body.name;
+    user = await user.save();
+    
+    // const token = jwt.encode({ id: user._id }, config.jwtSecret);
+    return res.send({ user });
+
+  } catch (error) {
+    next(error);
+  }
 };
+
+exports.me = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.send(user);
+  } catch (error) {
+    next(error);
+  }
+}
