@@ -50,7 +50,7 @@ exports.signup = async (req, res, next) => {
     user.name = req.body.name;
     user = await user.save();
     
-    // const token = jwt.encode({ id: user._id }, config.jwtSecret);
+    const token = jwt.encode({ id: user._id }, config.jwtSecret);
     return res.send({ user });
 
   } catch (error) {
